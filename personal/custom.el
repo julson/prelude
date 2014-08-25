@@ -5,9 +5,12 @@
 
 ;;; Code:
 
-(prelude-require-packages '(solarized-theme js3-mode))
+(prelude-require-packages '(solarized-theme js3-mode helm-spotify tern
+                                            tern-auto-complete))
 (setq prelude-guru nil)
 (setq prelude-flyspell nil)
+
+(tool-bar-mode -1)
 
 (global-hl-line-mode nil)
 (load-theme 'solarized-dark t)
@@ -37,5 +40,21 @@
 
 (add-to-list 'default-frame-alist
              '(font . "Inconsolata-13"))
+
+;; Use yaml-mode for RAML files
+(add-to-list 'auto-mode-alist '("\\.raml\\'" . yaml-mode))
+
+(setq js-indent-level 2)
+
+;; Customize js3-mode
+(custom-set-variables
+ '(js3-consistent-level-indent-inner-bracket t))
+
+;; set up tern
+(add-hook 'js3-mode-hook (lambda () (tern-mode t)))
+(eval-after-load 'tern
+  '(progn
+     (require 'tern-auto-complete)
+     (tern-ac-setup)))
 
 ;;; custom.el ends here
